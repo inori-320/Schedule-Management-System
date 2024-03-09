@@ -20,4 +20,13 @@ public class SysUserDAO extends BasicDAO<SysUser> {
             return 0;
         }
     }
+
+    public SysUser findUserInfo(String username){
+        sql = "select username, user_pwd as userPwd from sys_user where username = ?";
+        try {
+            return querySingle(sql, SysUser.class, username);
+        } catch (Exception e){
+            return null;
+        }
+    }
 }
