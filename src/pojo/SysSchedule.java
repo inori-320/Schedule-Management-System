@@ -1,58 +1,23 @@
 package pojo;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * @author lty
  */
+
+@AllArgsConstructor // 全参构造器
+@NoArgsConstructor  // 无参构造器
+@Data   // getter setter equals toString
 public class SysSchedule implements Serializable {
+    private Integer sid;
     private Integer uid;
-    private String username;
-    private String userPwd;
-
-    public SysSchedule() {}
-
-    public SysSchedule(Integer uid, String username, String userPwd) {
-        this.uid = uid;
-        this.username = username;
-        this.userPwd = userPwd;
-    }
-
-    public Integer getUid() {
-        return uid;
-    }
-
-    public void setUid(Integer uid) {
-        this.uid = uid;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getUserPwd() {
-        return userPwd;
-    }
-
-    public void setUserPwd(String userPwd) {
-        this.userPwd = userPwd;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        SysSchedule that = (SysSchedule) o;
-        return Objects.equals(uid, that.uid) && Objects.equals(username, that.username) && Objects.equals(userPwd, that.userPwd);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(uid, username, userPwd);
-    }
+    private String title;
+    private Integer completed;
 }
