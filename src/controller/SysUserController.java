@@ -5,27 +5,26 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import pojo.SysUser;
+import service.SysUserService;
 
 import java.io.IOException;
 
 /**
  * @author lty
  */
-@WebServlet("/user")
+@WebServlet("/user/*")
 public class SysUserController extends BasicController {
-    protected void add(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("add");
-    }
-
-    protected void find(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-    }
-
-    protected void update(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-    }
-
-    protected void remove(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+    private SysUserService service = new SysUserService();
+    protected void register(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String username = req.getParameter("username");
+        String userPwd = req.getParameter("userPwd");
+        SysUser sysUser = new SysUser(null, username, userPwd);
+        int rows = service.register(sysUser);
+        if(rows > 0){
+            resp.sendRedirect("/registerSuccess.html");
+        } else {
+            resp.sendRedirect("/registerFail.html");
+        }
     }
 }

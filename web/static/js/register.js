@@ -37,3 +37,10 @@ function checkPwdAgain(){
     userPwdAgainMsg.innerText = "√";
     return true;
 }
+
+function checkForm() {
+    let f1 = checkUsername();
+    let f2 = checkUserPwd();
+    let f3 = checkPwdAgain();
+    return f1 && f2 && f3;
+}

@@ -10,7 +10,7 @@
 <body>
     <h1 class="mainTitle">欢迎使用日程管理系统</h1>
     <h3 class="mainTitle" id="registerTitle">请注册</h3>
-    <form methon="post" action="./user/register" onsubmit="return checkForm()">
+    <form method="post" action="/user/register" onsubmit="return checkForm()">
         <table class="tab" cellspacing="0px">
             <tr class="ltr">
                 <td class="td_text">请输入账号</td>
@@ -29,7 +29,7 @@
             <tr class="ltr">
                 <td class="td_text">请确认密码</td>
                 <td>
-                    <input class="ipt" type="password" id="userPwdInputAgain" name="userPwd" onblur="checkPwdAgain()">
+                    <input class="ipt" type="password" id="userPwdInputAgain" name="reUserPwd" onblur="checkPwdAgain()">
                     <span id="userPwdAgainMsg"></span>
                 </td>
             </tr>
