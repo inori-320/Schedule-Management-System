@@ -5,6 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import pojo.SysUser;
 import service.SysUserService;
 import utils.MD5Util;
@@ -32,12 +33,14 @@ public class SysUserController extends BasicController {
     protected void login(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String username = req.getParameter("username");
         String userPwd = req.getParameter("userPwd");
-        String loginPwd = service.findPwdByUsername(username);
-        if(loginPwd == null){
+        SysUser sysUser = service.findPwdByUsername(username);
+        if(sysUser == null){
             resp.sendRedirect("/loginUsernameError.html");
-        } else if(!MD5Util.encrypt(userPwd).equals(loginPwd)) {
+        } else if(!MD5Util.encrypt(userPwd).equals(sysUser.getUserPwd())) {
             resp.sendRedirect("/loginUserPwdError.html");
         } else {
+            HttpSession session = req.getSession();
+            session.setAttribute("sysUser", sysUser);
             resp.sendRedirect("/showSchedule.html");
         }
     }

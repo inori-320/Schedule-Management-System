@@ -14,8 +14,7 @@ public class SysUserService {
         return dao.addSysUser(sysUser);
     }
 
-    public String findPwdByUsername(String username){
-        SysUser sysUser =  dao.findUserInfo(username);
-        return sysUser == null ? null : sysUser.getUserPwd();
+    public SysUser findPwdByUsername(String username){
+        return dao.findUserInfo(username);
     }
 }
