@@ -1,6 +1,6 @@
 package DAO;
 
-import utils.JDBCUtils;
+import utils.JDBCUtil;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
@@ -19,51 +19,51 @@ public class BasicDAO<T> {
 
     public int dml(String sql, Object... params){
         int affections = 0;
-        connection = JDBCUtils.getConnection();
+        connection = JDBCUtil.getConnection();
         try {
             affections = queryRunner.update(connection, sql, params);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            JDBCUtils.close(connection, null, null);
+            JDBCUtil.close(connection, null, null);
         }
         return affections;
     }
     public List<T> queryMulti(String sql, Class<T> cls, Object... params){
         List<T> list;
-        connection = JDBCUtils.getConnection();
+        connection = JDBCUtil.getConnection();
         try {
             list = queryRunner.query(connection, sql, new BeanListHandler<>(cls), params);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            JDBCUtils.close(connection, null, null);
+            JDBCUtil.close(connection, null, null);
         }
         return list;
     }
 
     public T querySingle(String sql, Class<T> cls, Object... params){
         T obj;
-        connection = JDBCUtils.getConnection();
+        connection = JDBCUtil.getConnection();
         try {
             obj = queryRunner.query(connection, sql, new BeanHandler<>(cls), params);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            JDBCUtils.close(connection, null, null);
+            JDBCUtil.close(connection, null, null);
         }
         return obj;
     }
 
     public Object queryScalar(String sql, Object... params){
         Object obj;
-        connection = JDBCUtils.getConnection();
+        connection = JDBCUtil.getConnection();
         try {
             obj = queryRunner.query(sql, new ScalarHandler<>(),params);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            JDBCUtils.close(connection, null, null);
+            JDBCUtil.close(connection, null, null);
         }
         return obj;
     }

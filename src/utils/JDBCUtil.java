@@ -3,7 +3,6 @@ package utils;
 import com.alibaba.druid.pool.DruidDataSourceFactory;
 
 import javax.sql.DataSource;
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -13,12 +12,12 @@ import java.util.Properties;
 /**
  * @author lty
  */
-public class JDBCUtils {
+public class JDBCUtil {
     private static final DataSource ds;
 
      static{
          Properties info = new Properties();
-         InputStream resourceAsStream = JDBCUtils.class.getClassLoader().getResourceAsStream("jdbc.properties");
+         InputStream resourceAsStream = JDBCUtil.class.getClassLoader().getResourceAsStream("jdbc.properties");
          try {
              info.load(resourceAsStream);
              ds = DruidDataSourceFactory.createDataSource(info);

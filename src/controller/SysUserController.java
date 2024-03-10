@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpSession;
 import pojo.SysUser;
 import service.SysUserService;
 import utils.MD5Util;
+import utils.WebUtil;
 
 import java.io.IOException;
 
@@ -55,9 +56,6 @@ public class SysUserController extends BasicController {
         if(sysUser != null){
             result = Result.build(null, ResultCodeEnum.USERNAME_USED);
         }
-        ObjectMapper objectMapper = new ObjectMapper();
-        String info = objectMapper.writeValueAsString(result);
-        resp.setContentType("application/json;charset=UTF-8");
-        resp.getWriter().write(info);
+        WebUtil.writeJson(resp, result);
     }
 }
