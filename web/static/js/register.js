@@ -7,8 +7,19 @@ function checkUsername(){
         usernameMsg.innerText = "格式必须是5-10位数字或字母";
         return false;
     }
-    usernameMsg.innerText = "√";
-    return true;
+    let request = new XMLHttpRequest();
+    request.onreadystatechange = function(){
+        if(request.readyState === 4 && request.status === 200){
+            let result = JSON.parse(request.responseText);
+            if(result.code === 200){
+                usernameMsg.innerText = "√";
+            } else if(result.code === 504){
+                usernameMsg.innerText = "用户名已被使用";
+            }
+        }
+    }
+    request.open("GET", "/user/checkUsernameUsed?username=" + username);
+    request.send();
 }
 
 function checkUserPwd(){

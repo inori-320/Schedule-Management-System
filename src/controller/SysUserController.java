@@ -1,5 +1,8 @@
 package controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import common.Result;
+import common.ResultCodeEnum;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -33,7 +36,7 @@ public class SysUserController extends BasicController {
     protected void login(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String username = req.getParameter("username");
         String userPwd = req.getParameter("userPwd");
-        SysUser sysUser = service.findPwdByUsername(username);
+        SysUser sysUser = service.findInfoByUsername(username);
         if(sysUser == null){
             resp.sendRedirect("/loginUsernameError.html");
         } else if(!MD5Util.encrypt(userPwd).equals(sysUser.getUserPwd())) {
@@ -43,5 +46,18 @@ public class SysUserController extends BasicController {
             session.setAttribute("sysUser", sysUser);
             resp.sendRedirect("/showSchedule.html");
         }
+    }
+
+    protected void checkUsernameUsed(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+        String username = req.getParameter("username");
+        SysUser sysUser = service.findInfoByUsername(username);
+        Result result = Result.ok(null);
+        if(sysUser != null){
+            result = Result.build(null, ResultCodeEnum.USERNAME_USED);
+        }
+        ObjectMapper objectMapper = new ObjectMapper();
+        String info = objectMapper.writeValueAsString(result);
+        resp.setContentType("application/json;charset=UTF-8");
+        resp.getWriter().write(info);
     }
 }

@@ -14,7 +14,7 @@ public class SysUserService {
         return dao.addSysUser(sysUser);
     }
 
-    public SysUser findPwdByUsername(String username){
+    public SysUser findInfoByUsername(String username){
         return dao.findUserInfo(username);
     }
 }
