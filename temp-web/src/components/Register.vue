@@ -1,6 +1,9 @@
 <script setup>
-  import { ref, reactive } from 'vue';
+  import { ref, reactive, renderSlot } from 'vue';
+  import request from '../utils/request';
+  import {useRouter} from 'vue-router';
 
+  const router = useRouter();
   let registUser = reactive({
     username: "",
     userPwd: ""
@@ -11,11 +14,16 @@
   let reUserPwdMsg = ref("");
   let reUserPwd = ref("");
 
-  function checkUsername(){
+  async function checkUsername(){
     let usernameReg = /^[a-zA-Z0-9]{5,10}$/;
     if(!usernameReg.test(registUser.username)){
         usernameMsg.value = "格式必须是5-10位数字或字母";
         return false;
+    }
+    let {data} = await request.post(`user/checkUsernameUsed?username=${registUser.username}`);
+    if(data.code !== 200){
+      usernameMsg.value = "用户名已被使用";
+      return false;
     }
     usernameMsg.value = "√";
     return true;
@@ -44,6 +52,22 @@
     }
     reUserPwdMsg.value = "√";
     return true;
+  }
+
+  async function checkForm(){
+    let f1 = await checkUsername();
+    let f2 = checkUserPwd();
+    let f3 = checkReUserPwd();
+    if(f1 && f2 && f3){
+      let {data} = await request.post('user/register', registUser);
+      if(data.code === 200){
+        router.push('/login');
+        return true;
+      } else {
+        alert("注册失败！");
+      }
+    }
+    return false;
   }
 
 </script>
@@ -91,7 +115,7 @@
         </tr>
         <tr class="ltr">
             <td colspan="2" class="buttonContainer">
-                <input class="btn1" type="button" value="注册">
+                <input class="btn1" type="button" @click="checkForm()" value="注册">
                 <input class="btn1" type="button" value="重置">
                 <router-link to="/login">
                   <button class="btn1">去登录</button>

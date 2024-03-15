@@ -1,7 +1,10 @@
 <script setup>
 
   import { ref, reactive } from 'vue';
+  import request from '../utils/request';
+  import { useRouter } from 'vue-router';
 
+  const router = useRouter();
   let loginUser = reactive({
     username: "",
     userPwd: ""
@@ -28,6 +31,23 @@
     }
     userPwdMsg.value = "√";
     return true;
+  }
+
+  function checkForm(){
+    let f1 = checkUsername();
+    let f2 = checkUserPwd();
+    if(f1 && f2){
+        let {data} = request.post('user/login', loginUser);
+        if(data.code === 200){
+            router.push('/ShowSchedules');
+            return true;
+        } else if(data.code === 501){
+            alert("用户名错误！");
+        } else if(data.code === 502){
+            alert("密码错误！");
+        }
+    }
+    return false;
   }
 
 </script>
@@ -58,7 +78,7 @@
             </tr>
             <tr class="ltr">
                 <td colspan="2" class="buttonContainer">
-                    <input class="btn1" type="button" value="登录">
+                    <input class="btn1" type="button" @click="checkForm()"  value="登录">
                     <input class="btn1" type="button" value="重置">
                     <router-link to="/register">
                       <button class="btn1">去注册</button>

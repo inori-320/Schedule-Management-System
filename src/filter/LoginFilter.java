@@ -13,7 +13,7 @@ import java.io.IOException;
 /**
  * @author lty
  */
-@WebFilter(urlPatterns = {"/showSchedule.html", "/schedule/*"})
+// @WebFilter(urlPatterns = {"/showSchedule.html", "/schedule/*"})
 public class LoginFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {

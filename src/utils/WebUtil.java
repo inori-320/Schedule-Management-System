@@ -26,13 +26,12 @@ public class WebUtil {
         BufferedReader reader;
         try {
             reader = request.getReader();
-            StringBuffer buffer = new StringBuffer();
+            StringBuilder buffer = new StringBuilder();
             String line;
             while((line = reader.readLine()) != null){
                 buffer.append(line);
             }
-
-            t= objectMapper.readValue(buffer.toString(),clazz);
+            t = objectMapper.readValue(buffer.toString(),clazz);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
