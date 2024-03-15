@@ -6,7 +6,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import pojo.SysUser;
 import service.SysUserService;
 import utils.MD5Util;
@@ -44,8 +43,8 @@ public class SysUserController extends BasicController {
             result = Result.build(null, ResultCodeEnum.PASSWORD_ERROR);
         } else {
             Map<String, SysUser> data = new HashMap<>();
-            loginUser.setUserPwd("");
-            data.put("loginUser", loginUser);
+            sysUser.setUserPwd("");
+            data.put("loginUser", sysUser);
             result = Result.ok(data);
         }
         WebUtil.writeJson(resp, result);
@@ -54,7 +53,7 @@ public class SysUserController extends BasicController {
     protected void checkUsernameUsed(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
         String username = req.getParameter("username");
         SysUser sysUser = service.findInfoByUsername(username);
-        Result result = Result.ok(null);
+        Result<Object> result = Result.ok(null);
         if(sysUser != null){
             result = Result.build(null, ResultCodeEnum.USERNAME_USED);
         }

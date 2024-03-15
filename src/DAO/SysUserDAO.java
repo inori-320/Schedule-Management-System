@@ -22,7 +22,7 @@ public class SysUserDAO extends BasicDAO<SysUser> {
     }
 
     public SysUser findUserInfo(String username){
-        sql = "select username, user_pwd as userPwd from sys_user where username = ?";
+        sql = "select uid, username, user_pwd as userPwd from sys_user where username = ?";
         try {
             return querySingle(sql, SysUser.class, username);
         } catch (Exception e){

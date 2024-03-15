@@ -6,11 +6,6 @@ export const defineSchedule = defineStore(
         state: () => {
             return {
                 itemList: [
-                    {
-                        uid: 0,
-                        title: "",
-                        complete: false
-                    }
                 ]
             }
         },
