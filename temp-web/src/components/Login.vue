@@ -42,7 +42,7 @@
         if(data.code === 200){
             sysUser.uid = data.data.loginUser.uid;
             sysUser.username = data.data.loginUser.username;
-            router.push('/ShowSchedules');
+            router.push('/show');
             return true;
         } else if(data.code === 501){
             alert("用户名错误！");

@@ -31,7 +31,7 @@ function logout(){
       <div class="optionDiv" v-else>
         欢迎{{sysUser.username}}
         <button class="b1b" @click="logout()">退出登录</button> 
-        <router-link to="/showSchedules">
+        <router-link to="/show">
           <button class="b1b">查看我的日程</button>
         </router-link>
       </div>
