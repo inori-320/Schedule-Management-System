@@ -13,6 +13,8 @@ import utils.MD5Util;
 import utils.WebUtil;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author lty
@@ -41,7 +43,10 @@ public class SysUserController extends BasicController {
         } else if(!MD5Util.encrypt(loginUser.getUserPwd()).equals(sysUser.getUserPwd())) {
             result = Result.build(null, ResultCodeEnum.PASSWORD_ERROR);
         } else {
-            result = Result.ok(null);
+            Map<String, SysUser> data = new HashMap<>();
+            loginUser.setUserPwd("");
+            data.put("loginUser", loginUser);
+            result = Result.ok(data);
         }
         WebUtil.writeJson(resp, result);
     }

@@ -3,13 +3,14 @@
   import { ref, reactive } from 'vue';
   import request from '../utils/request';
   import { useRouter } from 'vue-router';
+  import { defineUser } from '../store/userStore';
 
   const router = useRouter();
   let loginUser = reactive({
     username: "",
     userPwd: ""
   });
-
+  let sysUser = defineUser();
   let usernameMsg = ref("");
   let userPwdMsg = ref("");
 
@@ -33,12 +34,14 @@
     return true;
   }
 
-  function checkForm(){
+  async function checkForm(){
     let f1 = checkUsername();
     let f2 = checkUserPwd();
     if(f1 && f2){
-        let {data} = request.post('user/login', loginUser);
+        let {data} = await request.post('user/login', loginUser);
         if(data.code === 200){
+            sysUser.uid = data.data.loginUser.uid;
+            sysUser.username = data.data.loginUser.username;
             router.push('/ShowSchedules');
             return true;
         } else if(data.code === 501){
